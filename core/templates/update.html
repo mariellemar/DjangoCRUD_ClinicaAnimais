@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <title>Edição animais</title>
+</head>
+<body>
+    <h1>Editando:  {{animais.nome}}</h1>
+
+    
+        <form action="{% url 'atualizar' animais.id%}" method="POST">
+            {% csrf_token %}
+
+            Digite o nome do animal <input type="text" name="nome" value="{{animais.nome}}">
+            
+            <br>
+            Selecione a especie <select name="especie" id="animais">
+                <option value="Cachorro" {% if animais.especie == 'Cachorro' %}selected{% endif %}>Cachorro</option>
+                <option value="Gato" {% if animais.especie == 'Gato' %}selected{% endif %}>Gato</option>
+                <option value="Passaro" {% if animais.especie == 'Passaro' %}selected{% endif %}>Passaro</option>
+                <option value="Cavalo" {% if animais.especie == 'Cavalo' %}selected{% endif %}>Cavalo</option>
+            </select>
+
+            <br>
+            Nome do responsável <input type="text" name="nome_dono" value="{{animais.nome_dono}}">
+            
+            <br>
+            Telefone para contato <input type="text" name="telefone" value="{{animais.telefone}}" class="form-control" onkeypress="$(this).mask('(00) 0000-00009')">
+
+            <br>
+            <button type="submit">Atualizar</button>
+        </form>
+    </ul>
+     
+    <script>
+        $(document).ready(function() {
+            $("#telefone").mask("(00) 0000-00009");
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <title>Lista animais</title>
+</head>
+<body>
+    <h1>Lista de Animais</h1>
+    <hr>
+    <ul>
+        {% for animal in animais %}
+        <li>
+            {{animal.especie}}: {{animal.nome}}
+            
+            <br>
+            Dono: {{animal.nome_dono}}
+            <br>
+            Contato: {{animal.telefone}}
+            <br>
+
+            <a href="{% url 'editar' animal.id %}">Editar</a>
+            <a href="{% url 'deletar' animal.id %}">Deletar</a>
+            <br>
+            <br>
+        </li>
+        {% endfor %}
+
+        <form action="{% url 'salvar' %}" method="POST">
+            {% csrf_token %}
+
+            Digite o nome do animal <input type="text" name="nome">
+            
+            <br>
+            Selecione a especie <select name="especie" id="animais">
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>
+                <option value="Passaro">Passaro</option>
+                <option value="Cavalo">Cavalo</option>
+            </select>
+
+            <br>
+            Nome do responsável <input type="text" name="nome_dono">
+            
+            <br>
+            Telefone para contato <input type="text" name="telefone" class="form-control" onkeypress="$(this).mask('(00) 0000-00009')">
+
+            <br>
+            <button type="submit">Salvar</button>
+        </form>
+    </ul>
+     
+    <script>
+        $(document).ready(function() {
+            $("#telefone").mask("(00) 0000-00009");
+        });
+    </script>
+    
+</body>
+</html>
